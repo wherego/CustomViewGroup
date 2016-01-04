@@ -13,21 +13,23 @@ import android.widget.Scroller;
 /**
  * Created by tm on 2015/12/30.
  */
-public class CustomViewGroup extends ViewGroup {
+public class CustomScrollLayout extends ViewGroup {
 
     private int w = 500;
     private int h = 500;
     private Scroller mScroller;
+    private float mLastX;
+    private float mLastY;
 
-    public CustomViewGroup(Context context) {
+    public CustomScrollLayout(Context context) {
         this(context, null);
     }
 
-    public CustomViewGroup(Context context, AttributeSet attrs) {
+    public CustomScrollLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CustomViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomScrollLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -109,13 +111,19 @@ public class CustomViewGroup extends ViewGroup {
     public boolean onTouchEvent(MotionEvent event) {
 
         Log.d("tom", "-->onTouchEvent ");
-        switch (event.getAction()) {
+        final float x = event.getX();
+        final float y = event.getY();
+        final int action = event.getAction();
+
+        switch (action) {
             case MotionEvent.ACTION_DOWN:
                 Log.d("tom", "-->ACTION_DOWN ");
-                startMove(getScrollX(), getScrollY(), 100, 0);
+                mLastX = x;
+                mLastY = y;
                 break;
             case MotionEvent.ACTION_MOVE:
                 Log.d("tom", "-->ACTION_MOVE ");
+                scrollBy((int) (mLastX - x), (int) (mLastY - y));
                 break;
             case MotionEvent.ACTION_UP:
                 Log.d("tom", "-->ACTION_UP ");
@@ -127,13 +135,15 @@ public class CustomViewGroup extends ViewGroup {
                 break;
         }
 
-        return super.onTouchEvent(event);
+//        return super.onTouchEvent(event);
+        return true;
     }
 
     @Override
     public void computeScroll() {
         if (mScroller.computeScrollOffset()) {
             scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+            invalidate();
         } else {
 
         }

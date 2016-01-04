@@ -1,5 +1,6 @@
 package com.xylitol679.demo.customviewgroup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -7,32 +8,36 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
+public class ScrollerActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
-    private Button mLeftBtn, mTopBtn, mRightBtn, mBootomBtn;
-    private CustomViewGroup mRootViewGroup;
+    private Button mLeftBtn, mTopBtn, mRightBtn, mBootomBtn, mResetBtn, mGunBtn;
+    private CustomScrollLayout mCustomScrollLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_scroller);
 
-        mRootViewGroup = (CustomViewGroup) findViewById(R.id.multi_view);
+        mCustomScrollLayout = (CustomScrollLayout) findViewById(R.id.scroll_layout);
         mLeftBtn = (Button) findViewById(R.id.btn_left);
         mTopBtn = (Button) findViewById(R.id.btn_top);
         mRightBtn = (Button) findViewById(R.id.btn_right);
         mBootomBtn = (Button) findViewById(R.id.btn_bottom);
+        mResetBtn = (Button) findViewById(R.id.btn_reset);
+        mGunBtn = (Button) findViewById(R.id.btn_gun);
 
         mLeftBtn.setOnClickListener(this);
         mTopBtn.setOnClickListener(this);
         mRightBtn.setOnClickListener(this);
         mBootomBtn.setOnClickListener(this);
+        mResetBtn.setOnClickListener(this);
+        mGunBtn.setOnClickListener(this);
 
 //        mLeftBtn.setOnTouchListener(this);
 //        mTopBtn.setOnTouchListener(this);
 //        mRightBtn.setOnTouchListener(this);
 //        mBootomBtn.setOnTouchListener(this);
-
+//        mResetBtn.setOnTouchListener(this);
 
 
     }
@@ -41,20 +46,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_left:
-                mRootViewGroup.startMove(mRootViewGroup.getScrollX(), mRootViewGroup.getScrollY(), 100, 0);
-//                mRootViewGroup.invalidate();
+                mCustomScrollLayout.startMove(mCustomScrollLayout.getScrollX(), mCustomScrollLayout.getScrollY(), 100, 0);
                 break;
             case R.id.btn_top:
-                mRootViewGroup.startMove(mRootViewGroup.getScrollX(), mRootViewGroup.getScrollY(), 0, 100);
-//                mRootViewGroup.postInvalidate();
+                mCustomScrollLayout.startMove(mCustomScrollLayout.getScrollX(), mCustomScrollLayout.getScrollY(), 0, 100);
                 break;
             case R.id.btn_right:
-                mRootViewGroup.startMove(mRootViewGroup.getScrollX(), mRootViewGroup.getScrollY(), -100, 0);
-//                mRootViewGroup.postInvalidate();
+                mCustomScrollLayout.startMove(mCustomScrollLayout.getScrollX(), mCustomScrollLayout.getScrollY(), -100, 0);
                 break;
             case R.id.btn_bottom:
-                mRootViewGroup.startMove(mRootViewGroup.getScrollX(), mRootViewGroup.getScrollY(), 0, -100);
-//                mRootViewGroup.postInvalidate();
+                mCustomScrollLayout.startMove(mCustomScrollLayout.getScrollX(), mCustomScrollLayout.getScrollY(), 0, -100);
+                break;
+            case R.id.btn_reset:
+                mCustomScrollLayout.scrollTo(0, 0);
+                break;
+            case R.id.btn_gun:
+                startActivity(new Intent(ScrollerActivity.this, ViewDragHelperActivity.class));
                 break;
             default:
                 break;
@@ -66,16 +73,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d("tom", "-->onTouch ");
         switch (v.getId()) {
             case R.id.btn_left:
-                mRootViewGroup.scrollBy(100, 0);
+                mCustomScrollLayout.scrollBy(100, 0);
                 break;
             case R.id.btn_top:
-                mRootViewGroup.scrollBy(0, 100);
+                mCustomScrollLayout.scrollBy(0, 100);
                 break;
             case R.id.btn_right:
-                mRootViewGroup.scrollBy(-100, 0);
+                mCustomScrollLayout.scrollBy(-100, 0);
                 break;
             case R.id.btn_bottom:
-                mRootViewGroup.scrollBy(0, -100);
+                mCustomScrollLayout.scrollBy(0, -100);
                 break;
             default:
                 break;

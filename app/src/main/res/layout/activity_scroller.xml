@@ -3,11 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xylitol679.demo.customviewgroup.MainActivity">
+    tools:context=".ScrollerActivity">
 
+    <Button
+        android:id="@+id/btn_gun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="gun"/>
 
-    <com.xylitol679.demo.customviewgroup.CustomViewGroup
-        android:id="@+id/multi_view"
+    <com.xylitol679.demo.customviewgroup.CustomScrollLayout
+        android:id="@+id/scroll_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -47,5 +52,13 @@
             android:layout_height="wrap_content"
             android:text="bottom" android:layout_row="2"
             android:layout_column="1" />
+
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="reset"
+            android:layout_row="1"
+            android:layout_column="1"/>
     </GridLayout>
 </FrameLayout>
